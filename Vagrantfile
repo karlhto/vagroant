@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
 
     # Run bootstrap.sh script on first boot:
     config.vm.provision "bootstrap", type: "shell", path: "bootstrap.sh"
-    config.vm.synced_folder "#{VAGRANT_ROOT}", "/os_root",
+    config.vm.synced_folder "#{VAGRANT_ROOT}", "/vagrant",
                             rsync__args: ["--verbose", "--archive", "--delete", "-z", "--links"]
 
     # Performace settings for each vm:
