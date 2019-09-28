@@ -15,7 +15,7 @@ cd yay
 makepkg -si
 cd -
 
-yay --answerclean All --answerdiff None --answeredit None --answerupgrade None
+yay --answerclean None --answerdiff None --answeredit None --answerupgrade None
 yay -S --noconfirm neovim-git
 
 git clone https://github.com/karlhto/configs

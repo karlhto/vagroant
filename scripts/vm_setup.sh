@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 # C-things
-pacman -S --noconfirm gcc clang
-pacman -S --noconfirm valgrind gdb
+sudo pacman -S --noconfirm gcc clang
+sudo pacman -S --noconfirm valgrind gdb
 
 # Necessary things for dev environments
-pacman -S --noconfirm git
+sudo pacman -S --noconfirm git
 
 # ZSH! A better alternative to bash
-pacman -S --noconfirm zsh
+sudo pacman -S --noconfirm zsh
 
 # Shared folders
-pacmas -S --noconfirm nfs-utils
+sudo pacman -S --noconfirm nfs-utils
