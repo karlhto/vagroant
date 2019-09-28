@@ -1,11 +1,21 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
-# ZSH! A better alternative to bash
-sudo apt-get -y install zsh
+# Prezto
+git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+setopt EXTENDED_GLOB
+for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+done
 
-# Neovim
-sudo add-apt-repository ppa:neovim-ppa/unstable
-sudo apt-get -y update
-sudo apt-get -y install neovim
+chsh -s /bin/zsh vagrant
 
-pip3.5 install --user neovim
+# Setup yay
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+cd -
+
+yay --answerclean All --answerdiff None --answeredit None --answerupgrade None
+yay -S --noconfirm neovim-git
+
+git clone https://github.com/karlhto/configs

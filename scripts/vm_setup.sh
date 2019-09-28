@@ -1,17 +1,14 @@
 #!/usr/bin/env bash
 
 # C-things
-sudo apt-get -y install gcc
-sudo apt-get -y install valgrind gdb
-sudo apt-get -y install libc6-dev-i386 # Additional prerequisites
+pacman -S --noconfirm gcc clang
+pacman -S --noconfirm valgrind gdb
 
 # Necessary things for dev environments
-sudo apt-get -y install git
+pacman -S --noconfirm git
 
-# Python 3.5
-sudo add-apt-repository ppa:deadsnakes
-sudo apt-get update
-sudo apt-get -y python3.5
+# ZSH! A better alternative to bash
+pacman -S --noconfirm zsh
 
-# pip
-curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3.5
+# Shared folders
+pacmas -S --noconfirm nfs-utils
