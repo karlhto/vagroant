@@ -8,9 +8,6 @@ else
 end
 
 Vagrant.configure("2") do |config|
-  # forward x11 displays
-  config.ssh.forward_x11 = true
-
   # Run bootstrap.sh script on first boot:
   config.vm.provision "bootstrap", type: "shell", path: "bootstrap.sh"
   config.vm.synced_folder ".", "/vagrant"
@@ -35,17 +32,20 @@ Vagrant.configure("2") do |config|
 
   # Main development machine:
   config.vm.define "dev", primary: true, autostart: true do |dev|
-    config.vm.box = "generic/arch"
-    config.vm.hostname = "dev"
-    config.vm.network "private_network", ip: "192.168.100.20"
-    config.vm.provider "virtualbox" do |v, override|
+    # forward x11 displays
+    dev.ssh.forward_agent = true
+    dev.ssh.forward_x11 = true
+    dev.vm.box = "generic/arch"
+    dev.vm.hostname = "dev"
+    dev.vm.network "private_network", ip: "192.168.100.20"
+    dev.vm.provider "virtualbox" do |v, override|
       v.memory = 2048
       v.cpus = 2
       v.customize ["modifyvm", :id, "--vram", "16", "--clipboard", "bidirectional"]
       override.vm.synced_folder ".", "/vagrant", type: "nfs"
       override.vm.synced_folder "#{VAGRANT_ROOT}", "/prgr", type: "nfs"
     end
-    config.vm.provider :libvirt do |v|
+    dev.vm.provider :libvirt do |v|
       v.memory = 2048
       v.cpus = 2
     end
