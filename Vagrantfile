@@ -53,11 +53,25 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  config.vm.define "ubuntu", autostart: false do |ubnt|
+    ubnt.vm.provision "bootstrap", type: "shell", path: "ubuntu/bootstrap.sh"
+    ubnt.vm.box = "bento/ubuntu-20.04"
+    ubnt.vm.hostname = "ubuntu"
+    ubnt.vm.network "private_network", ip: "192.168.100.21"
+    ubnt.vm.provider "virtualbox" do |v, override|
+      v.memory = 4096
+      v.cpus = 4
+      v.customize ["modifyvm", :id, "--vram", "16", "--clipboard", "bidirectional"]
+      override.vm.synced_folder ".", "/vagrant", type: "nfs"
+      override.vm.synced_folder "#{VAGRANT_ROOT}", "/prgr", type: "nfs"
+    end
+  end
+
   config.vm.define "mnet", autostart: false do |mnet|
     mnet.vm.provision "bootstrap", type: "shell", path: "ubuntu/bootstrap.sh"
     mnet.vm.box = "ktr/mininet"
     mnet.vm.hostname = "mnet"
-    mnet.vm.network "private_network", ip: "192.168.100.21"
+    mnet.vm.network "private_network", ip: "192.168.100.22"
     mnet.vm.provider "virtualbox" do |v|
       v.memory = 2048
       v.cpus = 2
